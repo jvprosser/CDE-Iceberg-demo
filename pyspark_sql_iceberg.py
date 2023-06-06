@@ -61,12 +61,20 @@ spark = SparkSession\
 tablename = 'jvp_icewine_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://go01-demo/user/jprosser/winedata/wine-quality-1.csv")
+  .csv("s3a://go01-demo/user/jprosser/winedata/wine-quality-2.csv")
 
 df.printSchema()
 
-df.writeTo(f"{tablename}").using("iceberg").createOrReplace()
+
+df.writeTo(tablename)\
+     .tableProperty("write.format.default", "orc")\
+     .using("iceberg")\
+     .append()
 
 spark.sql(f"SELECT * FROM {tablename}").show(10)
+
+print ("Getting row count")
+
+spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 
 spark.stop()
