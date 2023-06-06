@@ -8,6 +8,9 @@
 #!touch data/features.txt
 
 expname = "jvp-exp-fanatics1"
+CONNECTION_NAME = "go01-aw-dl"
+first_snapshot=3118819346641394609
+
 import os
 import warnings
 import sys
@@ -37,23 +40,21 @@ if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
     
-    CONNECTION_NAME = "test-hive-VW"
+    import cml.data_v1 as cmldata
     conn = cmldata.get_connection(CONNECTION_NAME)
+    spark = conn.get_spark_session()
 
+    # Sample usage to run query through spark
     EXAMPLE_SQL_QUERY = "show databases"
-    dataframe = conn.get_pandas_dataframe(EXAMPLE_SQL_QUERY)
-    print(dataframe)
-    
-    ## Sample Usage to get pandas data frame
-    TIME_TRAVEL_QUERY = "SELECT * FROM default.jvp_icewine_test"
-    TIME_TRAVEL_QUERY = "SELECT * FROM default.jvptest1"
+    spark.sql(EXAMPLE_SQL_QUERY).show()
+      
+    #spark.sparkContext.getConf().getAll()
 
-    data = conn.get_pandas_dataframe(TIME_TRAVEL_QUERY)
-    print(data)
-    
-    # Read the wine-quality csv file (make sure you're running this from the root of MLflow!)
-    #wine_path = os.path.join(".", "wine-quality.csv")
-    #data = pd.read_csv(wine_path)
+    # get a snapshot so we always train with the same data
+    data = spark.read\
+    .option("snapshot-id", first_snapshot)\
+    .format("iceberg")\
+    .load("default.jvp_icewine_test").toPandas()
 
     # Split the data into training and test sets. (0.75, 0.25) split.
     train, test = train_test_split(data)
