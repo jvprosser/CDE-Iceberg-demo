@@ -45,12 +45,13 @@ and talk about this being an iceberg table and that we have our first snapshot.
 7. Connect the CDE job to the CDW query
 8. Run the job and look at the results.
 
-## Iceberg table management
+## CDW & Iceberg table management
 1. go back to the session and show the snapshots again.
-2. now go to CDW and go into a Hive Warehouse HUE session and select count(*)
-3. 'select count(*) from default.jvp_icewine_test'
-4. select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice
-5. result should be ~7k
+2. now go to CDW and talk about it, show visualization
+3. Go into a Hive Warehouse HUE session and select count(*)
+4. 'select count(*) from default.jvp_icewine_test'
+5. Select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice
+6. result should be ~7k
 'SELECT * FROM default.jvp_icewine_test.snapshots;'
 6. Alter the table to go back one snapshot
 'ALTER TABLE default.jvp_icewine_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); '
@@ -58,3 +59,6 @@ and talk about this being an iceberg table and that we have our first snapshot.
 7. Now result should be 4898
 'select count(*) from default.jvp_icewine_test'
 
+## CML
+1. create a project with this git
+2. run the prelim commands
