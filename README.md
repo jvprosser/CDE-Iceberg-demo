@@ -1,6 +1,8 @@
 # CDE-Iceberg-demo
 Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-dataset
-Thanks to Sujith K Mandala for the wine-quality-analysis-eda notebook.
+
+>Thanks to Sujith K Mandala for the wine-quality-analysis-eda notebook.
+
 I split the file into two halves and put them into my home folder on S3
 ## PREP
 1. Get on VPN
