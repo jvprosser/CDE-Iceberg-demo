@@ -2,13 +2,20 @@
 Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-dataset
 
 I split the file into two halves and put them into my home folder on S3
+## PREP
+1. drop table default.jvp_icewine_test;
+2. install the cde CLI, and update
 
-1. Go to CDE HOME
-2. talk about the uI
-3. Go to the sessions and start one up
-4. Paste this code in a session
 
-'tablename = 'jvp_icewine_test'
+## CDE
+3. Go to CDE HOME
+4. talk about the UI
+5. Go to the sessions and start one up and name it Fanatics-demo
+6. Once it comes up:
+7. go to the CLI and enter ` ./cde session interact --name Fanatics-demo`
+8. then go the the interact tab
+9. Paste this code in a session: 
+`tablename = 'jvp_icewine_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
   .csv("s3a://go01-demo/user/jprosser/winedata/wine-quality-1.csv")
@@ -24,11 +31,12 @@ spark.sql(f"SELECT * FROM {tablename}").show(10)
 
 print ("Getting row count")
 
-spark.sql(f"SELECT count(*) FROM {tablename}").show(10)'
+spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
+`
 
 5. paste this
 
-'spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()'
+`spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()`
 
 and talk about this being an iceberg table and that we have our first snapshot.
 
