@@ -80,5 +80,24 @@ Architects love it because it supports streaming and batch ingestion, multi-and 
 'select count(*) from default.jvp_icewine_test'
 
 ## CML
-1. create a project with this git
-2. run the prelim commands
+1. Create a project with this git
+2. in another tab, start the DataViz app (it takes a bit to run.)
+3. Start a session with extra CPU and RAM to run a python notebook.
+4. Load the EDA notebook and step through most of it.
+5. Start another session and load wine_train.py
+6. Start a terminal and execute `bash -x setup.sh`
+7. GO and get the first snapshot ID from HUE and put it in the file at the top
+8. step through the sections of the file executing in chunks.
+9. note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
+10. Run the files 2 or 3 more times.
+11. go and look at the experiments. Compare them.
+12. Mention that your code is broken and you cant deploy a model at this point, but can schedule a followup for later.
+
+## Viz
+1. If there's time, go to the data tab you opened earlier.
+2. go to Datasets
+3. select 'default-hive-data'
+4. click New Dataset ( from table - default - jvp_icewine_test )
+5. click on Fields - edit fields
+6. convert some of the measures to dimensions - density, ph, alcohol, quality
+7. click new dashboard on the right.
