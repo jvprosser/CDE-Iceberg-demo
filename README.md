@@ -3,23 +3,32 @@ Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-
 
 I split the file into two halves and put them into my home folder on S3
 ## PREP
-1. drop table default.jvp_icewine_test;
-2. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
+1. Get on VPN
+2. drop table default.jvp_icewine_test;
+3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 5. add an airflow connector to your hive VW and call it jvp-cde-hive-demo
 6. Connection type = hive client wrapper, host = host from jdbc driver, login/password from workload account
 7. install the cde CLI,
-4. Create a CDE VC if needed, with Iceberg and session support
-5. prewarm your hive VW
+7. Create a CDE VC if needed, with Iceberg and session support
+8. prewarm your hive VW
 
 
 ## CDE
 3. Go to CDE HOME
 4. talk about the UI
-5. Go to the sessions and start one up and name it Fanatics-demo
-6. Once it comes up:
-7. go to the CLI and enter ` ./cde session interact --name Fanatics-demo`
-8. then go the the interact tab
-9. Paste this code in a session: 
+5. Show your VC and show the config and Iceberg support
+**What is Apache Iceberg?**
+>Apache Iceberg is a new open table format targeted for petabyte-scale analytic datasets. 
+
+>Developers love it because it supports ACID transactions, Time Travel, Rollback, and in-place schema evolution.
+
+>Architects love it because it supports streaming and batch ingestion, multi-and hybrid cloud deployments, it's open source, and also engine agnostic.
+
+7. Go to the sessions and start one up and name it Fanatics-demo
+8. Once it comes up:
+9. go to the CLI and enter ` ./cde session interact --name Fanatics-demo`
+10. then go the the interact tab
+11. Paste this code in a session: 
 
 `tablename = 'jvp_icewine_test'
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
@@ -39,21 +48,15 @@ print ("Getting row count")
 spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 `
 
-5. paste this
+
+7. Go back to interact and paste this code:
 
 `spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()`
 
-and talk about this being an iceberg table and that we have our first snapshot.
-
-**What is Apache Iceberg?**
->Apache Iceberg is a new open table format targeted for petabyte-scale analytic datasets. 
-Developers love it because it supports ACID transactions, Time Travel, Rollback, and in-place schema evolution.
-Architects love it because it supports streaming and batch ingestion, multi-and hybrid cloud deployments, it's open source, and also engine agnostic.
-
-
+Talk about this being an iceberg table and that we have our first snapshot!
 
 6. Create a job by uploading pyspark_sql_iceberg.py and run it
-7. While its running, go look at the resource that was created containing the file. Talk about resources
+8. While its running, go look at the resource that was created containing the file. Talk about resources
 
 ## Airflow
 1. Click on jobs and describe the UI
