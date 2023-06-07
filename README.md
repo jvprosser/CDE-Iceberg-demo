@@ -94,7 +94,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 9. note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
 10. Run the files 2 or 3 more times.
 11. go and look at the experiments. Compare them.
-12. Mention that your code is broken and you cant deploy a model at this point, but can schedule a followup for later.
+12. Mention that you won't deploy a model at this point, but can schedule a followup for later.
 
 ## Viz
 1. If there's time, go to the data tab you opened earlier.
