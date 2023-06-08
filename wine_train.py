@@ -7,9 +7,9 @@
 #!mkdir data
 #!touch data/features.txt
 
-expname = "jvp-exp-fanatics1"
+expname = "XXX-exp-wine-quality"
 CONNECTION_NAME = "go01-aw-dl"
-first_snapshot=3118819346641394609
+first_snapshot=<GET THIS FROM CDW>
 
 import os
 import warnings
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     data = spark.read\
     .option("snapshot-id", first_snapshot)\
     .format("iceberg")\
-    .load("default.jvp_icewine_test").toPandas()
+    .load("default.XXX_icewine_test").toPandas()
     # show the number of rows - should be 2449
     data.shape[0]
     # Split the data into training and test sets. (0.75, 0.25) split.
