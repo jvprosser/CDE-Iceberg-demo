@@ -33,6 +33,7 @@ I split the file into two halves and put them into my home folder on S3
 11. Paste this code in a session: 
 
 `tablename = 'jvp_icewine_test'
+
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
   .csv("s3a://go01-demo/user/jprosser/winedata/wine-quality-1.csv")
   
