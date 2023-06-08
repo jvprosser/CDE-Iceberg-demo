@@ -6,9 +6,9 @@ Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-
 I split the file into two halves and put them into my home folder on S3
 ## PREP
 1. Get on VPN
-2. drop table default.jvp_icewine_test;
+2. drop table default.cdp_icewine_test;
 3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
-5. add an airflow connector to your hive VW and call it jvp-cde-hive-demo
+5. add an airflow connector to your hive VW and call it cdw-hive-demo
 6. Connection type = hive client wrapper, host = host from jdbc driver, login/password from workload account
 7. install the cde CLI,
 7. Create a CDE VC if needed, with Iceberg and session support
@@ -32,10 +32,10 @@ I split the file into two halves and put them into my home folder on S3
 10. then go the the interact tab
 11. Paste this code in a session: 
 
-`tablename = 'jvp_icewine_test'
+`tablename = 'cdp_icewine_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://go01-demo/user/jprosser/winedata/wine-quality-1.csv")
+  .csv("s3a://go01-demo/tmp/wine-quality-1.csv")
   
 df.printSchema()
 
@@ -67,7 +67,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 3. Drag a shell script over and click on the title to change it from script_1 to Check Env - `echo "starting ETL JOB!"`
 4. Drag a CDE job over and point to our recently created pyspark job
 5. Connect the shell script to the cde job
-6. Drag a CDW query over and paste 'select count(*) from default.jvp_icewine_test' ALSO make sure to add the VW connection 'jvp-cdw-hive-demo'
+6. Drag a CDW query over and paste 'select count(*) from default.cdp_icewine_test' ALSO make sure to add the VW connection 'cdw-hive-demo'
 7. Connect the CDE job to the CDW query
 8. Run the job and look at the results.
 
@@ -75,15 +75,15 @@ Talk about this being an iceberg table and that we have our first snapshot!
 1. go back to the session and show the snapshots again.
 3. now go to CDW and talk about it, show visualization
 4. Go into a Hive Warehouse HUE session and select count(*)
-5. 'select count(*) from default.jvp_icewine_test'
+5. 'select count(*) from default.cdp_icewine_test'
 6. Select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice
 7. result should be 7347
-'SELECT * FROM default.jvp_icewine_test.snapshots;'
+'SELECT * FROM default.cdp_icewine_test.snapshots;'
 6. Alter the table to go back one snapshot
-'ALTER TABLE default.jvp_icewine_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); '
+'ALTER TABLE default.cdp_icewine_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); '
 
 7. Now result should be 4898
-'select count(*) from default.jvp_icewine_test'
+'select count(*) from default.cdp_icewine_test'
 
 ## CML
 1. Create a project with this git
@@ -103,7 +103,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 1. If there's time, go to the data tab you opened earlier.
 2. go to Datasets
 3. select 'default-hive-data'
-4. click New Dataset ( from table - default - jvp_icewine_test )
+4. click New Dataset ( from table - default - cdp_icewine_test )
 5. click on Fields - edit fields
 6. convert some of the measures to dimensions - density, ph, alcohol, quality
 7. click new dashboard on the right.
