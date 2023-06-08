@@ -6,13 +6,15 @@ Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-
 I split the file into two halves and put them into my home folder on S3
 ## PREP
 1. Get on VPN
-2. drop table default.XXX_icewine_test;
+2. Drop table default.FAN_icewine_test;
 3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
-5. add an airflow connector to your hive VW and call it cdw-hive-demo
-6. Connection type = hive client wrapper, host = host from jdbc driver, login/password from workload account
-7. install the cde CLI,
-7. Create a CDE VC if needed, with Iceberg and session support
-8. prewarm your hive VW
+4. Create a CDE VC if needed, with Spark3, Iceberg and session support
+5. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
+
+`   Connection type = hive client wrapper, host = host from jdbc driver, login/password from workload account`
+
+6. Install the cde CLI,
+7. Prewarm your hive VW
 
 
 ## CDE
@@ -32,24 +34,21 @@ I split the file into two halves and put them into my home folder on S3
 10. then go the the interact tab
 11. Paste this code in a session: 
 
-`tablename = 'XXX_icewine_test'
+```
+tablename = 'FAN_icewine_test'
 
-df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://go01-demo/tmp/wine-quality-1.csv")
+df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/wine-quality-1.csv")
   
 df.printSchema()
 
-df.writeTo(tablename)\
-     .tableProperty("write.format.default", "orc")\
-     .using("iceberg")\
-     .create()
+df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").create()
      
 spark.sql(f"SELECT * FROM {tablename}").show(10)
 
 print ("Getting row count")
 
 spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
-`
+```
 
 
 7. Go back to interact and paste this code:
@@ -58,8 +57,17 @@ spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 
 Talk about this being an iceberg table and that we have our first snapshot!
 
-6. Create a job by uploading pyspark_sql_iceberg.py and run it
-8. While its running, go look at the resource that was created containing the file. Talk about resources
+>Now that we have our code working, let's put it in a job and run it that way!
+
+## Job
+1. Show that the code for pyspark_sql_iceberg.py is just like what we ran in the session but there's some session setup and the data file is different.
+2. Go to the jobs page and describe it.
+3. Create a job by uploading pyspark_sql_iceberg.py and save+run it.
+4. Go to job runs and describe the page
+5. Go to resources, look at was created for the job. Talk about resources. 
+6. go back to job runs and look at logs, SparkUI, etc
+
+> Now that our job is working let's start to operationalize it with Airflow!
 
 ## Airflow
 1. Click on jobs and describe the UI
@@ -69,9 +77,11 @@ Talk about this being an iceberg table and that we have our first snapshot!
 5. Connect the shell script to the cde job
 6. Drag a CDW query over and paste 'select count(*) from default.XXX_icewine_test' ALSO make sure to add the VW connection 'cdw-hive-demo'
 7. Connect the CDE job to the CDW query
-8. Run the job and look at the results.
+8. Start the job and look at the job run for it.
+9. Go to the Airflow UI and drill in
+10. Go to Logs and drill in, show log for each DAG task.
 
-## CDW & Iceberg table management
+## Iceberg table management and CDW
 1. go back to the session and show the snapshots again.
 3. now go to CDW and talk about it, show visualization
 4. Go into a Hive Warehouse HUE session and select count(*)
@@ -87,17 +97,22 @@ Talk about this being an iceberg table and that we have our first snapshot!
 
 ## CML
 1. Create a project with this git
-2. in another tab, start the DataViz app (it takes a bit to run.)
-3. Start a session with extra CPU and RAM to run a python notebook.
-4. Load the EDA notebook and step through most of it.
-5. Start another session and load wine_train.py
-6. Start a terminal and execute `bash -x setup.sh`
-7. GO and get the first snapshot ID from HUE and put it in the file at the top
-8. step through the sections of the file executing in chunks.
-9. note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
-10. Run the files 2 or 3 more times.
-11. go and look at the experiments. Compare them.
-12. Mention that you won't deploy a model at this point, but can schedule a followup for later.
+2. 
+3. Start a JupiterLab session with extra CPU and RAM 
+4. Start a terminal and execute `bash -x setup.sh`. - This takes longer than is desireable....
+9. ( If this is a git branch, execute `git checkout <branchname>` )
+5. Load the EDA notebook and step through most of it.
+6. Start another session with a workbook
+7. 
+8. 
+10. Get the first snapshot ID from HUE and assign it to `first_snapshot` at the top
+>I'm using the first snapshot because I always want to train the model using the same dataset
+
+12. Step through the sections of the file executing in chunks.
+13. Note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
+14. Run the files 2 or 3 more times.
+15. Look at the experiments. Compare them.
+16. Mention that you won't deploy a model at this point, but can schedule a followup for later.
 
 ## Viz
 1. If there's time, go to the data tab you opened earlier.
