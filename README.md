@@ -7,7 +7,7 @@ I split the file into two halves and put them into an S3 folder.
 
 ## PREP
 1. Clone this repo and replace XXX with your namespace in this file, CDE_pyspark_sql_iceberg.py, and wine_train.py
-2. Drop table default.FAN_icewine_test;
+2. drop table if exists default.FAN_icewine_test;
 3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 4. Create a CDE VC if needed, with Spark3, Iceberg and session support
 5. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
