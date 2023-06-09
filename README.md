@@ -3,18 +3,18 @@ Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-
 
 >Thanks to Sujith K Mandala for the wine-quality-analysis-eda notebook.
 
-I split the file into two halves and put them into my home folder on S3
+I split the file into two halves and put them into an S3 folder.
+
 ## PREP
-1. Get on VPN
-2. Clone this repo and replace XXX with your namespace in this file, CDE_pyspark_sql_iceberg.py, and wine_train.py
-3. Drop table default.XXX_icewine_test;
-4. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
-5. Create a CDE VC if needed, with Spark3, Iceberg and session support
-6. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
+1. Clone this repo and replace XXX with your namespace in this file, CDE_pyspark_sql_iceberg.py, and wine_train.py
+2. Drop table default.XXX_icewine_test;
+3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
+4. Create a CDE VC if needed, with Spark3, Iceberg and session support
+5. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
 
 `   Connection type = hive client wrapper, host = host from jdbc driver, login/password from workload account`
 
-6. Install the cde CLI,
+6. Install the cde CLI if needed,
 7. Prewarm your hive VW
 
 
