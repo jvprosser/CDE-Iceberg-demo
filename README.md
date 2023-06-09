@@ -44,7 +44,7 @@ df.printSchema()
 ```
 
 ```
-df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").create()
+df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").createOrReplace()
      
 spark.sql(f"SELECT * FROM {tablename}").show(10)
 
