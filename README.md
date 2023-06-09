@@ -86,11 +86,15 @@ Talk about this being an iceberg table and that we have our first snapshot!
 3. now go to CDW and talk about it, show visualization
 4. Go into a Hive Warehouse HUE session and select count(*)
 5. 'select count(*) from default.XXX_icewine_test'
-6. Select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice
-7. result should be 7347
-'SELECT * FROM default.XXX_icewine_test.snapshots;'
+6. Select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice:
+
+`SELECT * FROM default.XXX_icewine_test.snapshots;`
+
+8. result should be 7347
+
 6. Alter the table to go back one snapshot
-'ALTER TABLE default.XXX_icewine_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); '
+
+`ALTER TABLE default.XXX_icewine_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); `
 
 7. Now result should be 4898
 'select count(*) from default.XXX_icewine_test'
@@ -103,16 +107,65 @@ Talk about this being an iceberg table and that we have our first snapshot!
 9. ( If this is a git branch, execute `git checkout <branchname>` )
 5. Load the EDA notebook and step through most of it.
 6. Start another session with a workbook
-7. 
-8. 
-10. Get the first snapshot ID from HUE and assign it to `first_snapshot` at the top
+7. Get the first snapshot ID from HUE and assign it to `first_snapshot` at the top
 >I'm using the first snapshot because I always want to train the model using the same dataset
 
 12. Step through the sections of the file executing in chunks.
 13. Note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
-14. Run the files 2 or 3 more times.
+14. Run the code 2 or 3 more times to generate more experiment data. The hyperparameters are randomly generated.
 15. Look at the experiments. Compare them.
-16. Mention that you won't deploy a model at this point, but can schedule a followup for later.
+16. Pick one and scroll down to artifacts
+17. Click on model, discuss
+18. Click *Register Model* button and fill in the form. Pick a suitable name.
+19. Click on Model Deployments, discuss, click on *New Model*
+20. Select *Deploy registered model*
+21. in the *Registered Model* field, select the model name from above.
+22. uncheck *Enable Authentication*
+
+>Note: MLFlow uses pandas JSON format and so the example input needs to be in the format below:
+
+Enter Example Input
+
+```{
+  "columns": [
+    "alcohol",
+    "chlorides",
+    "citric acid",
+    "density",
+    "fixed acidity",
+    "free sulfur dioxide",
+    "pH",
+    "residual sugar",
+    "sulphates",
+    "total sulfur dioxide",
+    "volatile acidity"
+  ],
+  "data": [
+    [
+      12.8,
+      0.029,
+      0.48,
+      0.98,
+      6.2,
+      29,
+      3.33,
+      1.2,
+      0.39,
+      75,
+      0.66
+    ]
+  ]
+}
+```
+
+And Sample Response:
+
+`{    "quality": 6 }`
+
+23. Click *Deploy*
+24. Once deployment completes, click on the model, discuss [ The monitoring tab is showing errors, so don't click on it! ]
+26. Click on *Test* button at bottom.
+
 
 ## Viz
 1. If there's time, go to the data tab you opened earlier.
