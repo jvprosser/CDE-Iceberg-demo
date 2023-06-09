@@ -7,7 +7,7 @@
 #!mkdir data
 #!touch data/features.txt
 
-expname = "XXX-exp-wine-quality"
+expname = "ZZZ-exp-wine-quality"
 CONNECTION_NAME = "go01-aw-dl"
 first_snapshot=<GET THIS FROM CDW>
 
