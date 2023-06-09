@@ -65,7 +65,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 ## Job
 1. Show that the code for pyspark_sql_iceberg.py is just like what we ran in the session but there's some session setup and the data file is different.
 2. Go to the jobs page and describe it.
-3. Create a job by uploading pyspark_sql_iceberg.py and save+run it.
+3. Create a job by uploading CDE_pyspark_sql_iceberg.py and save+run it.
 4. Go to job runs and describe the page
 5. Go to resources, look at was created for the job. Talk about resources. 
 6. go back to job runs and look at logs, SparkUI, etc
