@@ -41,7 +41,9 @@ tablename = 'XXX_icewine_test'
 df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/wine-quality-1.csv")
   
 df.printSchema()
+```
 
+```
 df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").create()
      
 spark.sql(f"SELECT * FROM {tablename}").show(10)
