@@ -6,7 +6,7 @@ Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-
 I split the file into two halves and put them into my home folder on S3
 ## PREP
 1. Get on VPN
-2. Drop table default.FAN_icewine_test;
+2. Drop table default.XXX_icewine_test;
 3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 4. Create a CDE VC if needed, with Spark3, Iceberg and session support
 5. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
@@ -35,7 +35,7 @@ I split the file into two halves and put them into my home folder on S3
 11. Paste this code in a session: 
 
 ```
-tablename = 'FAN_icewine_test'
+tablename = 'XXX_icewine_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/wine-quality-1.csv")
   
