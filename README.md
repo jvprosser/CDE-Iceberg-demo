@@ -1,13 +1,14 @@
 # CDE-Iceberg-demo
-Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-dataset
-
+This demo can use any csv file with minimal changes, listed below.
+For this case we use the Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-dataset
 >Thanks to Sujith K Mandala for the wine-quality-analysis-eda notebook.
+
 
 I split the file into two halves and put them into an S3 folder.
 
 ## PREP
 1. Clone this repo and replace ZZZ with your namespace in this file, CDE_pyspark_sql_iceberg.py, and wine_train.py
-2. Drop table if exists default.ZZZ_icewine_test;
+2. Drop table if exists default.ZZZ_icedata_test;
 3. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 4. Create a CDE VC if needed, with Spark3, Iceberg and session support
 5. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
@@ -36,9 +37,9 @@ I split the file into two halves and put them into an S3 folder.
 11. Paste this code in a session: 
 
 ```
-tablename = 'ZZZ_icewine_test'
+tablename = 'ZZZ_icedata_test'
 
-df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/wine-quality-1.csv")
+df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/data-quality-1.csv")
   
 df.printSchema()
 ```
@@ -76,7 +77,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 3. Drag a shell script over and click on the title to change it from script_1 to Check Env - `echo "starting ETL JOB!"`
 4. Drag a CDE job over and point to our recently created pyspark job
 5. Connect the shell script to the cde job
-6. Drag a CDW query over and paste 'select count(*) from default.ZZZ_icewine_test' ALSO make sure to add the VW connection 'cdw-hive-demo'
+6. Drag a CDW query over and paste 'select count(*) from default.ZZZ_icedata_test' ALSO make sure to add the VW connection 'cdw-hive-demo'
 7. Connect the CDE job to the CDW query
 8. Start the job and look at the job run for it.
 9. Go to the Airflow UI and drill in
@@ -86,19 +87,19 @@ Talk about this being an iceberg table and that we have our first snapshot!
 1. go back to the session and show the snapshots again.
 3. now go to CDW and talk about it, show visualization
 4. Go into a Hive Warehouse HUE session and select count(*)
-5. 'select count(*) from default.ZZZ_icewine_test'
+5. 'select count(*) from default.ZZZ_icedata_test'
 6. Select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice:
 
-`SELECT * FROM default.ZZZ_icewine_test.snapshots;`
+`SELECT * FROM default.ZZZ_icedata_test.snapshots;`
 
 8. result should be 7347
 
 6. Alter the table to go back one snapshot
 
-`ALTER TABLE default.ZZZ_icewine_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); `
+`ALTER TABLE default.ZZZ_icedata_test EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); `
 
 7. Now result should be 4898
-'select count(*) from default.ZZZ_icewine_test'
+'select count(*) from default.ZZZ_icedata_test'
 
 ## CML
 1. Create a project with this git
@@ -173,7 +174,7 @@ And Sample Response:
 1. If there's time, go to the data tab you opened earlier.
 2. go to Datasets
 3. select 'default-hive-data'
-4. click New Dataset ( from table - default - ZZZ_icewine_test )
+4. click New Dataset ( from table - default - ZZZ_icedata_test )
 5. click on Fields - edit fields
 6. convert some of the measures to dimensions - density, ph, alcohol, quality
 7. click new dashboard on the right.
