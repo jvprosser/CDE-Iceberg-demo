@@ -4,7 +4,7 @@ For this case we use the Wine quality dataset https://www.kaggle.com/datasets/ya
 >Thanks to Sujith K Mandala for the wine-quality-analysis-eda notebook.
 
 
-I split the file into two halves and put them into an S3 folder.
+I split the file into two halves, named them datafile-1.cvs and datafile-2.csv put them into an S3 folder .
 
 ## PREP
 1. Clone this repo and replace ZZZ with your namespace in this file, CDE_pyspark_sql_iceberg.py, and wine_train.py
@@ -39,7 +39,7 @@ I split the file into two halves and put them into an S3 folder.
 ```
 tablename = 'ZZZ_icedata_test'
 
-df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/data-quality-1.csv")
+df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://go01-demo/tmp/datafile-1.csv")
   
 df.printSchema()
 ```
