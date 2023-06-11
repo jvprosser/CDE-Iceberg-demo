@@ -50,7 +50,7 @@ from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerT
 data_lake_name="s3a://go01-demo"
 spark = SparkSession\
     .builder\
-    .appName("Wine-Quality-Predictor")\
+    .appName("Data-Quality-Predictor")\
     .config("spark.sql.catalog.spark_catalog", "org.apache.iceberg.spark.SparkSessionCatalog")\
     .config("spark.sql.catalog.spark_catalog.type", "hive")\
     .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")\
@@ -58,10 +58,10 @@ spark = SparkSession\
     .getOrCreate()
 
 
-tablename = 'ZZZ_icewine_test'
+tablename = 'ZZZ_icedata_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://go01-demo/tmp/wine-quality-2.csv")
+  .csv("s3a://go01-demo/tmp/datafile-2.csv")
 
 df.printSchema()
 
