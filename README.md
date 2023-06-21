@@ -101,7 +101,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 7. Now result should be 4898
 'select count(*) from default.ZZZ_icewine_test'
 
-## CML
+## CML  This demo shows MLFlow. while it works in the demo AWS env it is not GA.
 1. Create a project with this git
 2. Start a JupiterLab session with extra CPU and RAM 
 3. Start a terminal and execute `bash -x setup.sh`. - This takes longer than is desireable....
