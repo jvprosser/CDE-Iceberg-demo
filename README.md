@@ -7,7 +7,7 @@ I split the file into two halves and put them into an S3 folder.
 
 ## PREP
 1. Clone this repo and replace ZZZ with your namespace in this file, CDE_pyspark_sql_iceberg.py, and wine_train.py
-2. replace BUCKET with your datalake.
+2. replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md`
 3. Drop table if exists default.ZZZ_icewine_test;
 4. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 5. Create a CDE VC if needed, with Spark3, Iceberg and session support
