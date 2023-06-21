@@ -103,12 +103,11 @@ Talk about this being an iceberg table and that we have our first snapshot!
 
 ## CML
 1. Create a project with this git
-2. 
-3. Start a JupiterLab session with extra CPU and RAM 
-4. Start a terminal and execute `bash -x setup.sh`. - This takes longer than is desireable....
-9. ( If this is a git branch, execute `git checkout <branchname>` )
+2. Start a JupiterLab session with extra CPU and RAM 
+3. Start a terminal and execute `bash -x setup.sh`. - This takes longer than is desireable....
+4. ( If this is a git branch, execute `git checkout <branchname>` )
 5. Load the EDA notebook and step through most of it.
-6. Start another session with a workbook
+6. Start another session with a workbench
 7. Get the first snapshot ID from HUE and assign it to `first_snapshot` at the top
 >I'm using the first snapshot because I always want to train the model using the same dataset
 
