@@ -110,7 +110,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 6. Start another session with a workbench running Spark3
 7. Get the first snapshot ID from HUE and assign it to `first_snapshot` at the top
 >I'm using the first snapshot because I always want to train the model using the same dataset
-
+8. Confirm that the CONNECTION_NAME variable matches the correct Data "Connection Code Snippet" element.
 12. Step through the sections of the file executing in chunks.
 13. Note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
 14. Run the code 2 or 3 more times to generate more experiment data. The hyperparameters are randomly generated.
