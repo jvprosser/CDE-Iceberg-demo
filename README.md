@@ -1,5 +1,5 @@
 # CDE-Iceberg-demo
-Using Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-dataset
+Using the open source Wine quality dataset https://www.kaggle.com/datasets/yasserh/wine-quality-dataset
 
 >Thanks to Sujith K Mandala for the wine-quality-analysis-eda notebook.
 
