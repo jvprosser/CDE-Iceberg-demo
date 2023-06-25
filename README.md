@@ -52,6 +52,11 @@ print ("Getting row count")
 spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 ```
 
+```
+spark.sql(f"ALTER TABLE {tablename} ADD COLUMN notes STRING AFTER Quality")
+spark.sql(f"ALTER TABLE {tablename} ADD COLUMN wineid int FIRST")
+spark.sql(f"SELECT * FROM {tablename}").show(10) 
+```
 
 7. Go back to interact and paste this code:
 
