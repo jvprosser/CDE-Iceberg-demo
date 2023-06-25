@@ -31,7 +31,7 @@ data_lake_name=config.get("general","data_lake_name")
 s3BucketName=config.get("general","s3BucketName")
 tablename=config.get("general","tablename")
 
-expname = "ZZZ-exp-wine-quality"
+expname = =config.get("general","CMLExperimentName")
 CONNECTION_NAME = "<get this from 'data' button in CML>"
 
 import cml.data_v1 as cmldata
