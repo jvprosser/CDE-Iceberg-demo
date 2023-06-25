@@ -7,13 +7,19 @@ I split the file into two halves and put them into an S3 folder.
 
 ## PREP
 1. Clone this repo and update parameters.conf
-2. replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md`
-3. Drop table if exists default.ZZZ_winedata;
-4. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
-5. Create a CDE VC if needed, with Spark3, Iceberg and session support
-6. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
+```
+data_lake_name: s3a://BUCKET/
+s3BucketName: s3a://BUCKET/tmp
+tablename: ZZZ_winedata
+```
+2. 
+3. Replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
+4. Drop table if exists default.ZZZ_winedata;
+5. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
+6. Create a CDE VC if needed, with Spark3, Iceberg and Session support
+7. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
 
-`   Connection type = hive client wrapper, host = host from jdbc driver, login/password from workload account`
+`   Connection type = hive client wrapper, host = host from jdbc conn string, login/password from workload account`
 
 6. Install the cde CLI if needed,
 7. Prewarm your hive VW
