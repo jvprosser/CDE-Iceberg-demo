@@ -54,7 +54,7 @@ if __name__ == "__main__":
     data = spark.read\
     .option("snapshot-id", first_snapshot)\
     .format("iceberg")\
-    .load("default.XXX_icewine_test").toPandas()
+    .load("default.XXX_winedata").toPandas()
     # show the number of rows - should be 2449
     data.shape[0]
     # Split the data into training and test sets. (0.75, 0.25) split.
