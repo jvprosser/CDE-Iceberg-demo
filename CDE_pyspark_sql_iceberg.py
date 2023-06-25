@@ -46,8 +46,14 @@ import os
 import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerType
+import configparser
 
-data_lake_name="s3a://BUCKET"
+config = configparser.ConfigParser()
+config.read('/app/mount/parameters.conf')
+data_lake_name=config.get("general","data_lake_name")
+s3BucketName=config.get("general","s3BucketName")
+tablename=config.get("general","tablename")
+
 spark = SparkSession\
     .builder\
     .appName("Wine-Quality-Predictor")\
@@ -58,10 +64,8 @@ spark = SparkSession\
     .getOrCreate()
 
 
-tablename = 'ZZZ_winedata'
-
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://BUCKET/tmp/wine-quality-2.csv")
+  .csv(f"{s3BucketName}/wine-quality-2.csv")
 
 df.printSchema()
 
