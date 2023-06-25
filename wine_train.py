@@ -7,8 +7,7 @@
 #!mkdir data
 #!touch data/features.txt
 
-expname = "ZZZ-exp-wine-quality"
-CONNECTION_NAME = "go01-aw-dl"
+
 first_snapshot=<GET THIS FROM CDW>
 
 import os
@@ -24,7 +23,16 @@ from sklearn.linear_model import ElasticNet
 
 import mlflow
 import mlflow.sklearn
+import configparser
 
+config = configparser.ConfigParser()
+config.read('./parameters.conf')
+data_lake_name=config.get("general","data_lake_name")
+s3BucketName=config.get("general","s3BucketName")
+tablename=config.get("general","tablename")
+
+expname = "ZZZ-exp-wine-quality"
+CONNECTION_NAME = "<get this from 'data' button in CML>"
 
 import cml.data_v1 as cmldata
 
