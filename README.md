@@ -7,13 +7,8 @@ I split the file into two halves and put them into an S3 folder.
 
 ## PREP
 1. Clone this repo and update parameters.conf
-```
-data_lake_name: s3a://BUCKET/
-s3BucketName: s3a://BUCKET/tmp
-tablename: ZZZ_winedata
-```
-2. 
-3. Replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
+
+2. Replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
 4. Drop table if exists default.ZZZ_winedata;
 5. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 6. Create a CDE VC if needed, with Spark3, Iceberg and Session support
