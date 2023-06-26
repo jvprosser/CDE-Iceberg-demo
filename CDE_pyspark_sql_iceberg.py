@@ -45,14 +45,17 @@ from __future__ import print_function
 import os
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerType
-import configparser
 
-config = configparser.ConfigParser()
-config.read('/app/mount/parameters.conf')
-data_lake_name=config.get("general","data_lake_name")
-s3BucketName=config.get("general","s3BucketName")
-tablename=config.get("general","tablename")
+#import configparser
+#config = configparser.ConfigParser()
+#config.read('/app/mount/parameters.conf')
+#data_lake_name=config.get("general","data_lake_name")
+#s3BucketName=config.get("general","s3BucketName")
+#tablename=config.get("general","tablename")
+
+data_lake_name= "s3a://BUCKET/"
+s3BucketName  = "s3a://BUCKET/tmp"
+tablename     = "ZZZ_winedata"
 
 spark = SparkSession\
     .builder\
@@ -75,10 +78,10 @@ df.writeTo(tablename)\
      .using("iceberg")\
      .append()
 
-spark.sql(f"SELECT * FROM {tablename}").show(10)
+spark.sql(f"SELECT * FROM default.{tablename}").show(10)
 
 print ("Getting row count")
 
-spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
+spark.sql(f"SELECT count(*) FROM default.{tablename}").show(10)
 
 spark.stop()
