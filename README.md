@@ -25,7 +25,7 @@ I split the file into two halves and put them into an S3 folder.
 4. talk about the UI
 5. Show your VC and show the config and Iceberg support
 **What is Apache Iceberg?**
->Apache Iceberg is a new open table format targeted for petabyte-scale analytic datasets. 
+>Apache Iceberg is a new open table format targeted for petabyte-scale analytic datasets.
 
 >Developers love it because it supports ACID transactions, Time Travel, Rollback, and in-place schema evolution.
 
@@ -35,18 +35,18 @@ I split the file into two halves and put them into an S3 folder.
 8. Once it comes up:
 9. go to the CLI and enter ` ./cde session interact --name ZZZ-demo`
 10. then go the the interact tab
-11. Paste this code in a session: 
+11. Paste this code in a session:
 
 ```
 tablename = 'ZZZ_winedata'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',').csv("s3a://BUCKET/tmp/wine-quality-1.csv")
-  
+
 df.printSchema()
 ```
 
 ```
-df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").createOrReplace()   
+df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").createOrReplace()
 spark.sql(f"SELECT * FROM {tablename}").show(10)
 
 print ("Getting row count")
@@ -56,25 +56,34 @@ spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 
 7. Go back to interact and paste this code:
 
-`spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()`
+```
+spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()
+
+spark.sql(f"SELECT * FROM default.{tablename}.history").show()
+```
+
 
 Talk about this being an iceberg table and that we have our first snapshot!
 
 >Now that we have our code working, let's put it in a job and run it that way!
 
 ## Job
-1. Show that the code for pyspark_sql_iceberg.py is just like what we ran in the session but there's some session setup and the data file is different.
+1. Show that the code for CDE_pyspark_sql_iceberg.py is just like what we ran in the session but there's some session setup and the data file is different.
+3. Create a file-based Spark3 job by uploading CDE_pyspark_sql_iceberg.py, creating a resource called ZZZ-Resource
+
+
+
+and save+run it.
 2. Go to the jobs page and describe it.
-3. Create a job by uploading CDE_pyspark_sql_iceberg.py and save+run it.
 4. Go to job runs and describe the page
-5. Go to resources, look at was created for the job. Talk about resources. 
+5. Go to resources, look at was created for the job. Talk about resources.
 6. go back to job runs and look at logs, SparkUI, etc
 
 > Now that our job is working let's start to operationalize it with Airflow!
 
 ## Airflow
-1. Click on jobs and describe the UI
-2. Create an AIRFLOW job and give it a name and select editor
+1. Click on jobs and create an AIRFLOW job and give it a name and select editor, then click the 'Create' button.
+2. Select 'Editor' from the menubar.
 3. Drag a shell script over and click on the title to change it from script_1 to Check Env - `echo "starting ETL JOB!"`
 4. Drag a CDE job over and point to our recently created pyspark job
 5. Connect the shell script to the cde job
@@ -85,33 +94,40 @@ Talk about this being an iceberg table and that we have our first snapshot!
 10. Go to Logs and drill in, show log for each DAG task.
 
 ## Iceberg table management and CDW
-1. go back to the session and show the snapshots again.
-3. now go to CDW and talk about it, show visualization
-4. Go into a Hive Warehouse HUE session and select count(*)
-5. 'select count(*) from default.ZZZ_winedata'
+1. Go back to the session and show the snapshots again.
+3. Now go to CDW and talk about it, show visualization
+4. Go into a Hive Warehouse HUE session and get the row count
+
+`SELECT COUNT(*) FROM default.ZZZ_winedata;`
+
 6. Select the snapshots again and point out that the last 2 snapshots are duplicates since we ran the pyspark job twice:
 
-`SELECT * FROM default.ZZZ_winedata.snapshots;`
 
-8. result should be 7347
+```
+SELECT * FROM default.ZZZ_winedata.history;
+
+SELECT * FROM default.ZZZ_winedata.snapshots;
+```
+
+8. The result should be 7347, which is more than desired.
 
 6. Alter the table to go back one snapshot
 
 `ALTER TABLE default.ZZZ_winedata EXECUTE ROLLBACK(PUT_YOUR_SNAPSHOT_HERE); `
 
-7. Now result should be 4898
-'select count(*) from default.ZZZ_winedata'
+7. Now result should be 4898 from
+`select count(*) from default.ZZZ_winedata`
 
 ## CML  This demo shows MLFlow. while it works in the demo AWS env it is not GA.
-1. Create a project with this git
-2. Start a JupiterLab session with extra CPU and RAM 
-3. Start a terminal and execute `bash -x setup.sh`. - This takes longer than is desireable....
+1. Create a project with this git and upload parameters.conf.
+2. Start a JupiterLab session with extra CPU and RAM
+3. Start a terminal and execute `bash -x setup.sh`.
 4. ( If this is a git branch, execute `git checkout <branchname>` )
 5. Load the EDA notebook and step through most of it.
 6. Start another session with a workbench running Spark3
 7. Get the first snapshot ID from HUE and assign it to `first_snapshot` at the top
->I'm using the first snapshot because I always want to train the model using the same dataset
-8. Confirm that the CONNECTION_NAME variable matches the correct Data "Connection Code Snippet" element.
+>I'm using the first snapshot because I always want to train the model using the same dataset.  In Q4, there will be support for Iceberg Tags and Branching, which can be used to attach meaningful labels these snapshots.
+8. Confirm that the CONNECTION_NAME variable matches the *Spark Data Lake*  Data "Connection Code Snippet" element.
 9. Step through the sections of the file executing in chunks.
 10. Note that we are loading the same data but from an even earlier snapshot, because we always want to train from a known dataset.
 11. Run the code 2 or 3 more times to generate more experiment data. The hyperparameters are randomly generated.
@@ -130,7 +146,8 @@ Talk about this being an iceberg table and that we have our first snapshot!
 
 Enter Example Input
 
-```{
+```
+{
   "columns": [
     "alcohol",
     "chlorides",
