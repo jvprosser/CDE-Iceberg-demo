@@ -7,9 +7,6 @@
 #!mkdir data
 #!touch data/features.txt
 
-
-first_snapshot=<GET THIS FROM CDW>
-
 import os
 import warnings
 import sys
@@ -27,12 +24,14 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('./parameters.conf')
-data_lake_name=config.get("general","data_lake_name")
-s3BucketName=config.get("general","s3BucketName")
-tablename=config.get("general","tablename")
 
-expname = =config.get("general","CMLExperimentName")
-CONNECTION_NAME = "<get this from 'data' button in CML>"
+data_lake_name =config.get("general","data_lake_name")
+s3BucketName   =config.get("general","s3BucketName")
+tablename      =config.get("general","tablename")
+expname        =config.get("general","CMLExperimentName")
+
+CONNECTION_NAME = "<get Spark Data Lake connector name  from 'data' button in CML>"
+first_snapshot=<GET THIS FROM CDW>
 
 import cml.data_v1 as cmldata
 
@@ -47,7 +46,7 @@ def eval_metrics(actual, pred):
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
-    
+
     import cml.data_v1 as cmldata
     conn = cmldata.get_connection(CONNECTION_NAME)
     spark = conn.get_spark_session()
@@ -55,14 +54,14 @@ if __name__ == "__main__":
     # Sample usage to run query through spark
     EXAMPLE_SQL_QUERY = "show databases"
     spark.sql(EXAMPLE_SQL_QUERY).show()
-      
+
     #spark.sparkContext.getConf().getAll()
 
     # get a snapshot so we always train with the same data
     data = spark.read\
     .option("snapshot-id", first_snapshot)\
     .format("iceberg")\
-    .load("default.XXX_winedata").toPandas()
+    .load(f"default.{tablename}").toPandas()
     # show the number of rows - should be 2449
     data.shape[0]
     # Split the data into training and test sets. (0.75, 0.25) split.
