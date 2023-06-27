@@ -10,20 +10,24 @@ I split the file into two halves and put them into an S3 folder.
 
 2. Replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
 4. Drop table if exists default.ZZZ_winedata;
-5. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
+5. Copy/upload the 2 csv files to s3a://BUCKET/tmp
 6. Create a CDE VC if needed, with Spark3, Iceberg and Session support
 7. Add an airflow connector to your CDE VC for your CDW Hive VW and call it cdw-hive-demo
 
 `   Connection type = hive client wrapper, host = host from jdbc conn string, login/password from workload account`
 
 6. Install the cde CLI if needed,
-7. Prewarm your hive VW
+7. If you see `Error: error in Session endpoint healthcheck <html>` when you test the cde command line, it means you need to
+8. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
+9. Prewarm your hive VW
 
 
 ## CDE
 3. Go to CDE HOME
 4. talk about the UI
-5. Show your VC and show the config and Iceberg support
+5. Go to the sessions and start one up and name it ZZZ-demo
+6. While that is starting,
+7. Go bacl to Home and show the details of your VC  e.g. config and Iceberg support
 **What is Apache Iceberg?**
 >Apache Iceberg is a new open table format targeted for petabyte-scale analytic datasets.
 
