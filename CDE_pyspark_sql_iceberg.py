@@ -47,7 +47,7 @@ import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerType
 
-data_lake_name="s3a://BUCKET"
+data_lake_name="s3a://go01-demo"
 spark = SparkSession\
     .builder\
     .appName("Wine-Quality-Predictor")\
