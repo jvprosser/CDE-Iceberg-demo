@@ -61,7 +61,7 @@ spark = SparkSession\
 tablename = 'ZZZ_icewine_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://BUCKET/tmp/wine-quality-2.csv")
+  .csv("s3a://BUCKET/tmp/wine-quality-id-2.csv")
 
 df.printSchema()
 
