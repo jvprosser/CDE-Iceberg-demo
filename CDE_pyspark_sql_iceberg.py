@@ -47,7 +47,7 @@ import sys
 from pyspark.sql import SparkSession
 from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerType
 
-data_lake_name="s3a://go01-demo"
+data_lake_name="s3a://BUCKET"
 spark = SparkSession\
     .builder\
     .appName("Wine-Quality-Predictor")\
@@ -61,7 +61,7 @@ spark = SparkSession\
 tablename = 'ZZZ_icewine_test'
 
 df = spark.read.options(header='True', inferSchema='True', delimiter=',') \
-  .csv("s3a://go01-demo/tmp/wine-quality-id-2.csv")
+  .csv("s3a://BUCKET/tmp/wine-quality-id-2.csv")
 
 df.printSchema()
 
