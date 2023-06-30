@@ -52,11 +52,7 @@ print ("Getting row count")
 spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 ```
 
-```
-spark.sql(f"ALTER TABLE {tablename} ADD COLUMN notes STRING AFTER Quality")
-#spark.sql(f"ALTER TABLE {tablename} ADD COLUMN wineid int FIRST")
-spark.sql(f"SELECT * FROM {tablename}").show(10) 
-```
+
 
 7. Go back to interact and paste this code:
 
@@ -87,6 +83,13 @@ Talk about this being an iceberg table and that we have our first snapshot!
 8. Start the job and look at the job run for it.
 9. Go to the Airflow UI and drill in
 10. Go to Logs and drill in, show log for each DAG task.
+11. Go back to the session and add a column
+```
+spark.sql(f"ALTER TABLE {tablename} ADD COLUMN notes STRING AFTER Quality")
+#spark.sql(f"ALTER TABLE {tablename} ADD COLUMN wineid int FIRST")
+spark.sql(f"SELECT * FROM {tablename}").show(10) 
+```
+
 
 ## Iceberg table management and CDW
 1. go back to the session and show the snapshots again.
