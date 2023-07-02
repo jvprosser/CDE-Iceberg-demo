@@ -50,7 +50,7 @@ df.printSchema()
 ```
 
 ```
-df.writeTo(tablename).tableProperty("write.format.default", "orc").using("iceberg").createOrReplace()
+df.writeTo(tablename).tableProperty("write.format.default", "orc").tableProperty("format-version" = "2").using("iceberg").createOrReplace()
 spark.sql(f"SELECT * FROM {tablename}").show(10)
 
 print ("Getting row count")
