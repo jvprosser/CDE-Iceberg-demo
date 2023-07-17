@@ -8,7 +8,8 @@ I split the file into two halves and put them into an S3 folder.
 ## PREP
 1. Clone this repo and update parameters.conf
 
-2. Replace BUCKET with your datalake. i.e. `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
+2. Replace WWW and my-sandbox01 with your prefix and datalake in the source files and README
+    `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
 4. Drop table if exists default.ZZZ_winedata;
 5. Copy/upload the 2 csv files to s3a://BUCKET/tmp
 6. Create a CDE VC if needed, with Spark3, Iceberg and Session support
@@ -38,8 +39,9 @@ I split the file into two halves and put them into an S3 folder.
 7. Go to the sessions and start one up and name it ZZZ-demo
 8. Once it comes up:
 9. go to the CLI and enter ` ./cde session interact --name ZZZ-demo`
-10. then go the the interact tab
-11. Paste this code in a session:
+10. enter a trivial python command like `2+2`
+11. then go the the interact tab and you should see this activity there as well.
+12. Paste this code in a session:
 
 ```
 tablename = 'ZZZ_winedata'
