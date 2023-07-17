@@ -63,9 +63,9 @@ spark.sql(f"SELECT count(*) FROM {tablename}").show(10)
 7. Go back to interact and paste this code:
 
 ```
-spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()
-
 spark.sql(f"SELECT * FROM default.{tablename}.history").show()
+
+spark.sql(f"SELECT * FROM default.{tablename}.snapshots").show()
 ```
 
 
