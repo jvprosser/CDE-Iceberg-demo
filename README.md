@@ -32,7 +32,8 @@ I split the file into two halves and put them into an S3 folder.
 **What is Apache Iceberg?**
 >Apache Iceberg is a new open table format targeted for petabyte-scale analytic datasets.
 
->Developers love it because it supports ACID transactions, Time Travel, Rollback, and in-place schema evolution.
+>Developers love it because it supports ACID transactions, Time Travel, Rollback, and in-place schema evolution. Keep in mind that "ACID" is datalake ACID not OLTP ACID - for rapid row updates use Kudu
+
 
 >Architects love it because it supports streaming and batch ingestion, multi-and hybrid cloud deployments, it's open source, and also engine agnostic.
 
