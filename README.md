@@ -122,6 +122,25 @@ SELECT * FROM default.ZZZ_winedata.snapshots;
 7. Now result should be 4898 from
 `select count(*) from default.ZZZ_winedata`
 
+8. Now alter the partition spec and insert some more data. Look at the snapshots
+```
+alter table default.ZZZ_winedata set partition spec(bucket(3, quality));
+
+insert into default.ZZZ_winedata (`fixed acidity`,`volatile acidity`,`citric acid`,`residual sugar`,`chlorides`,`free sulfur dioxide`,`total sulfur dioxide`,`density`,`pH`,`sulphates`,`alcohol`,`quality`) Values
+(6.7,0.72,0.62,2.3,0.034,16,181,0.99934,3.45,0.36,10.6,2),(6.6,0.65,0.51,10,0.307,38,175,0.99642,3.28,0.52,9.4,3),(6.6,0.65,0.15,10,0.073,38,175,0.99462,3.82,0.52,9.4,4),(7.3,0.91,0.72,1.6,0.027,35,136,0.99428,3.38,0.45,11,5);
+
+SELECT * FROM default.ZZZ_winedata.snapshots;
+```
+9. Get the location of the table. 
+```
+show create table default.ZZZ_winedata;
+```
+
+10. Go to a gateway node and run the following. Point out that there are now two partition directory schemes.
+```
+hdfs dfs -ls -R <TABLE LOCATION>/data
+```
+
 ## CML  This demo shows MLFlow. while it works in the demo AWS env it is not GA.
 1. Create a project with this git and upload parameters.conf.
 2. Start a JupiterLab session with extra CPU and RAM
