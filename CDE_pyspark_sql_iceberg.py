@@ -74,7 +74,7 @@ df.printSchema()
 
 
 df.writeTo(tablename)\
-     .tableProperty("write.format.default", "orc")\
+     .tableProperty("write.format.default", "parquet")\
      .using("iceberg")\
      .append()
 
