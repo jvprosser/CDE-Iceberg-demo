@@ -6,7 +6,7 @@ Using the open source Wine quality dataset https://www.kaggle.com/datasets/yasse
 I split the file into two halves and put them into an S3 folder.
 
 ## PREP
-1. Clone this repo and update parameters.conf
+1. Clone this repo 
 
 2. Replace WWW and my-sandbox01 with your prefix and datalake in the source files and README
     `sed -i '.bak' -e 's/ZZZ/WWW/g' -e 's/BUCKET/my-sandbox01/g' *.py *.md *.conf`
