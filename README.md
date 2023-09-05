@@ -21,6 +21,7 @@ I split the file into two halves and put them into an S3 folder.
 7. If you see `Error: error in Session endpoint healthcheck <html>` when you test the cde command line, it means you need to
 8. Get the jobs api url for this virtual cluster and update the vcluster-endpoint in ~/.cde/config.yaml
 9. Prewarm your hive VW
+10. Make sure your CML workspace has model registry enabled!
 
 
 ## CDE
