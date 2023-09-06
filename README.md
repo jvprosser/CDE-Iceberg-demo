@@ -81,7 +81,7 @@ Talk about this being an iceberg table and that we have our first snapshot!
 2. Create a file-based Spark3 job by uploading CDE_pyspark_sql_iceberg.py, creating a resource called ZZZ-Resource and save+run it.
 3. Go to the jobs page and describe it.
 4. Go to job runs and describe the page
-5. Go to resources, look at was created for the job. Talk about resources.
+5. Go to resources, look at was created for the job. Talk about resources.  Custom runtime engines https://community.cloudera.com/t5/Community-Articles/Creating-Custom-Runtimes-with-Spark3-Python-3-9-on-Cloudera/ta-p/368867
 6. go back to job runs and look at logs, SparkUI, etc
 
 > Now that our job is working let's start to operationalize it with Airflow!
